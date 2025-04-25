@@ -1,0 +1,44 @@
+using System;
+
+class Program
+{
+    const int m = 65521; // duża liczba pierwsza
+    static readonly int[] a = { 3, 5, 7, 11, 13, 17 }; // współczynniki
+
+    static int UniversalHash(int year, int month, int day, int hour, int minute, int second)
+    {
+        long hash = 0;
+        int[] values = { year, month, day, hour, minute, second };
+
+        for (int i = 0; i < a.Length; i++)
+        {
+            hash = (hash + (long)a[i] * values[i]) % m;
+        }
+
+        return (int)hash;
+    }
+
+    static void Main()
+    {
+        Console.Write("Podaj rok: ");
+        int year = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj miesiąc: ");
+        int month = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj dzień: ");
+        int day = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj godzinę: ");
+        int hour = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj minutę: ");
+        int minute = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj sekundę: ");
+        int second = int.Parse(Console.ReadLine());
+
+        int h = UniversalHash(year, month, day, hour, minute, second);
+        Console.WriteLine($"Hash daty {year}-{month:D2}-{day:D2} {hour:D2}:{minute:D2}:{second:D2} = {h}");
+    }
+}
