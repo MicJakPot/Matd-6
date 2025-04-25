@@ -1,0 +1,40 @@
+using System;
+
+class Program
+{
+    const int m = 65521; // największa liczba pierwsza < 2^16
+
+    // Funkcja haszująca dla liczby wymiernej (p/q)
+    static int UniversalHash(int numerator, int denominator)
+    {
+        if (denominator == 0)
+            throw new ArgumentException("Mianownik nie może być zerem.");
+
+        int a1 = 31;
+        int a2 = 73;
+
+        // haszujemy jako h(p, q) = (a1 * p + a2 * q) mod m
+        long hash = ((long)a1 * numerator + (long)a2 * denominator) % m;
+
+        return (int)hash;
+    }
+
+    static void Main()
+    {
+        Console.Write("Podaj licznik (p): ");
+        int p = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj mianownik (q): ");
+        int q = int.Parse(Console.ReadLine());
+
+        try
+        {
+            int h = UniversalHash(p, q);
+            Console.WriteLine($"Hash liczby {p}/{q} = {h}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Błąd: {ex.Message}");
+        }
+    }
+}
